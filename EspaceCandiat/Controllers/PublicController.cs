@@ -36,21 +36,21 @@ namespace EspaceCandiat.Controllers
                 }
                 else
                 {
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        await cv.CopyToAsync(stream);
-                    }
-
-                    candidat.Cv = fullPath;
-                    _context.Candidats.Add(candidat);
-                    await _context.SaveChangesAsync();
-
-                    var subject = "Confirmation de candidature";
-                    var message = $"Bonjour {candidat.Nom}, vous avez postulé avec succès pour l'offre )";
-                    //await _emailSender.SendEmailAsync(candidat.Email, subject, message);
-
-                    return Json(new { success = true });
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await cv.CopyToAsync(stream);
                 }
+
+                candidat.Cv = fullPath;
+                _context.Candidats.Add(candidat);
+                await _context.SaveChangesAsync();
+
+                var subject = "Confirmation de candidature";
+                var message = $"Bonjour {candidat.Nom}, vous avez postulé avec succès pour l'offre )";
+                //await _emailSender.SendEmailAsync(candidat.Email, subject, message);
+
+                return Json(new { success = true });
+            }
             }
             catch (Exception ex)
             {
