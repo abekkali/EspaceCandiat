@@ -1,0 +1,120 @@
+﻿
+@model IEnumerable<EspaceCandiat.Models.Candidat>
+@{
+    ViewData["Title"] = "Listes des Candidats";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+<table id="ListCandidats" class="table table-striped table-bordered" style="width:100%">
+    
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telephone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NiveauEtude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnneesExperience)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DernierEmployeur)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prenom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telephone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NiveauEtude)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AnneesExperience)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DernierEmployeur)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="@item.Id">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    <button type="button" data-candidat-id="@item.Id" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalCV">
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                    </button>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="ModalCV" tabindex="-1" role="dialog" aria-labelledby="ModalCVLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalCVLabel">Candidat CV</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <object id="cvObject" data="" type="application/pdf">
+                    <p>Il semble que votre navigateur ne peut pas afficher de PDFs. Pas de problème, <a id="cvDownloadLink" href="">cliquez ici pour télécharger le CV</a>.</p>
+                </object>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer ce candidat ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Supprimer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#ListCandidats').DataTable();
+        });
+    </script>
+
+}
